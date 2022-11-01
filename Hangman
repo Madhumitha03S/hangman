@@ -3,9 +3,10 @@ import java.util.*;
 public class Hangman {
 
     /**
-     *  List of words to choose from
+     *  Topic 1 Words
      */
-    public static String[] words = {"actor", "adamant", "afraid", "ant", "apple", "ash",
+    public static String[] general = {
+            "actor", "adamant", "afraid", "ant", "apple", "ash",
             "badger", "balloon", "bat", "bear", "beaver", "burst",
             "camel", "cat", "clam", "cobra", "cougar", "coyote", "crow",
             "dance", "dare", "deal", "deer", "dog", "donkey", "duck",
@@ -22,75 +23,97 @@ public class Hangman {
             "salmon", "seal", "shark", "sheep", "skunk", "sloth", "snake", "spider", "stork", "swan",
             "tasty", "tiger", "toad", "trick", "trout", "turkey", "turtle",
             "weasel", "weird", "whale", "wolf", "wombat", "words", "worst",
-            "zeal", "zebra", "zipper"};
+            "zeal", "zebra", "zipper"
+    };
+
+    /**
+     *  Topic 2 Words
+     */
+    public static String[] animals = {
+            "ant", "baboon", "badger", "bat", "bear", "beaver", "camel",
+            "cat", "clam", "cobra", "cougar", "coyote", "crow", "deer",
+            "dog", "donkey", "duck", "eagle", "ferret", "fox", "frog", "goat",
+            "goose", "hawk", "lion", "lizard", "llama", "mole", "monkey", "moose",
+            "mouse", "mule", "newt", "otter", "owl", "panda", "parrot", "pigeon",
+            "python", "rabbit", "ram", "rat", "raven","rhino", "salmon", "seal",
+            "shark", "sheep", "skunk", "sloth", "snake", "spider", "stork", "swan",
+            "tiger", "toad", "trout", "turkey", "turtle", "weasel", "whale", "wolf",
+            "wombat", "zebra"
+    };
 
     /**
      *  Stages of the gallow
      */
     public static String[] gallows = {
             "+---+\n" +
-            "|   |\n" +
-            "    |\n" +
-            "    |\n" +
-            "    |\n" +
-            "    |\n" +
-            "=========\n",
+                    "|   |\n" +
+                    "    |\n" +
+                    "    |\n" +
+                    "    |\n" +
+                    "    |\n" +
+                    "=========\n",
 
             "+---+\n" +
-            "|   |\n" +
-            "O   |\n" +
-            "    |\n" +
-            "    |\n" +
-            "    |\n" +
-            "=========\n",
+                    "|   |\n" +
+                    "O   |\n" +
+                    "    |\n" +
+                    "    |\n" +
+                    "    |\n" +
+                    "=========\n",
 
             "+---+\n" +
-            "|   |\n" +
-            "O   |\n" +
-            "|   |\n" +
-            "    |\n" +
-            "    |\n" +
-            "=========\n",
+                    "|   |\n" +
+                    "O   |\n" +
+                    "|   |\n" +
+                    "    |\n" +
+                    "    |\n" +
+                    "=========\n",
 
             " +---+\n" +
-            " |   |\n" +
-            " O   |\n" +
-            "/|   |\n" +
-            "     |\n" +
-            "     |\n" +
-            " =========\n",
+                    " |   |\n" +
+                    " O   |\n" +
+                    "/|   |\n" +
+                    "     |\n" +
+                    "     |\n" +
+                    " =========\n",
 
             " +---+\n" +
-            " |   |\n" +
-            " O   |\n" +
-            "/|\\  |\n" + // The only way to print '\' is with a trailing escape character, '\'
-            "     |\n" +
-            "     |\n" +
-            " =========\n",
+                    " |   |\n" +
+                    " O   |\n" +
+                    "/|\\  |\n" + // The only way to print '\' is with a trailing escape character, '\'
+                    "     |\n" +
+                    "     |\n" +
+                    " =========\n",
 
             " +---+\n" +
-            " |   |\n" +
-            " O   |\n" +
-            "/|\\  |\n" +
-            "/    |\n" +
-            "     |\n" +
-            " =========\n",
+                    " |   |\n" +
+                    " O   |\n" +
+                    "/|\\  |\n" +
+                    "/    |\n" +
+                    "     |\n" +
+                    " =========\n",
 
             " +---+\n" +
-            " |   |\n" +
-            " O   |\n" +
-            "/|\\  |\n" +
-            "/ \\  |\n" +
-            "     |\n" +
-            " =========\n"
+                    " |   |\n" +
+                    " O   |\n" +
+                    "/|\\  |\n" +
+                    "/ \\  |\n" +
+                    "     |\n" +
+                    " =========\n"
     };
 
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
 
-        // Choosing a random word
-        String randomWord = chooseRandomWord();
+        // Asking user to choose a topic
+        System.out.print("Topics:\n\t1. General\n\t2. Animals");
+        System.out.print("\nChoose a topic number: ");
+        int topicNumber = scanner.nextInt();
+        scanner.nextLine();
+
+        // Choosing a random word from the topic
+        String randomWord = chooseRandomWord(topicNumber);
 
         // Placeholders reflecting the number of characters
         char[] placeholders = new char[randomWord.length()];
@@ -156,10 +179,25 @@ public class Hangman {
      * @return
      *
      */
-    public static String chooseRandomWord() {
+    /* public static String chooseRandomWord() {
         double randomDouble = words.length * Math.random();
         int randomInt = (int) randomDouble;
         return words[randomInt];
+    } */
+    public static String chooseRandomWord(int topicNum) {
+        int randomInt = 0;
+        switch (topicNum) {
+            case 1:
+                randomInt = (int) (general.length * Math.random());
+                return general[randomInt];
+            case 2:
+                randomInt = (int) (animals.length * Math.random());
+                return animals[randomInt];
+
+            default:
+                randomInt = (int) (general.length * Math.random());
+                return general[randomInt];
+        }
     }
 
     /**
@@ -192,6 +230,7 @@ public class Hangman {
             }
         }
     }
+
     /**
      *
      * @param placeholders
