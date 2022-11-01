@@ -1,0 +1,217 @@
+import java.util.*;
+
+public class Hangman {
+
+    /**
+     *  List of words to choose from
+     */
+    public static String[] words = {"actor", "adamant", "afraid", "ant", "apple", "ash"
+            "badger", "balloon", "bat", "bear", "beaver", "burst",
+            "camel", "cat", "clam", "cobra", "cougar", "coyote", "crow",
+            "dance", "dare", "deal", "deer", "dog", "donkey", "duck",
+            "eagle", "east", "enemy", "evil", "excite", "eyebrow",
+            "fast", "ferret", "fist", "flash", "fox", "friend", "frog",
+            "game", "garden", "goat", "goose", "green", "guest",
+            "hawk", "hell", "hinge", "host", "house", "humble", "hustle",
+            "large", "leverage", "lion", "lizard", "llama", "lounge",
+            "marriage", "mentor", "military", "mole", "monkey", "moose", "mouse", "mule",
+            "nasty", "nerd", "newt", "niche", "nine", "nose", "nurse",
+            "oil", "orange", "ostrich", "otter", "owl",
+            "panda", "parrot", "pest", "pigeon", "player", "portrait", "python",
+            "rabbit", "ram", "rat", "raven", "rest", "rhino", "rhythm",
+            "salmon", "seal", "shark", "sheep", "skunk", "sloth", "snake", "spider", "stork", "swan",
+            "tasty", "tiger", "toad", "trick", "trout", "turkey", "turtle",
+            "weasel", "weird", "whale", "wolf", "wombat", "words", "worst",
+            "zeal", "zebra", "zipper"};
+
+    /**
+     *  Stages of the gallow
+     */
+    public static String[] gallows = {
+            "+---+\n" +
+            "|   |\n" +
+            "    |\n" +
+            "    |\n" +
+            "    |\n" +
+            "    |\n" +
+            "=========\n",
+
+            "+---+\n" +
+            "|   |\n" +
+            "O   |\n" +
+            "    |\n" +
+            "    |\n" +
+            "    |\n" +
+            "=========\n",
+
+            "+---+\n" +
+            "|   |\n" +
+            "O   |\n" +
+            "|   |\n" +
+            "    |\n" +
+            "    |\n" +
+            "=========\n",
+
+            " +---+\n" +
+            " |   |\n" +
+            " O   |\n" +
+            "/|   |\n" +
+            "     |\n" +
+            "     |\n" +
+            " =========\n",
+
+            " +---+\n" +
+            " |   |\n" +
+            " O   |\n" +
+            "/|\\  |\n" + // The only way to print '\' is with a trailing escape character, '\'
+            "     |\n" +
+            "     |\n" +
+            " =========\n",
+
+            " +---+\n" +
+            " |   |\n" +
+            " O   |\n" +
+            "/|\\  |\n" +
+            "/    |\n" +
+            "     |\n" +
+            " =========\n",
+
+            " +---+\n" +
+            " |   |\n" +
+            " O   |\n" +
+            "/|\\  |\n" +
+            "/ \\  |\n" +
+            "     |\n" +
+            " =========\n"
+    };
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        // Choosing a random word
+        String randomWord = chooseRandomWord();
+
+        // Placeholders reflecting the number of characters
+        char[] placeholders = new char[randomWord.length()];
+        for (int i = 0; i < randomWord.length(); i++) {
+            placeholders[i] = '_';
+        }
+
+        // Showing misses and number of misses
+        int numMisses = 0;
+        char misses[] = new char[6];
+
+        while (numMisses < 6) {
+            System.out.print("\n");
+
+            // Showing Gallows
+            System.out.print(gallows[numMisses]);
+
+            // Showing Placeholders
+            System.out.print("Word: ");
+            printPlaceholders(placeholders);
+            System.out.print("\n");
+
+            // Showing Missed Guesses
+            System.out.print("Misses: ");
+            printMisses(misses);
+            System.out.print("\n");
+
+            // Taking user's guess as input
+            System.out.print("Guess: ");
+            char guess = scanner.nextLine().charAt(0);
+            System.out.print("\n");
+
+            if (checkGuess(randomWord, guess)) {
+                // Replace placeholder with correct guess
+                updatePlaceholders(randomWord, placeholders, guess);
+            } else {
+                // Update the missed guess
+                misses[numMisses] = guess;
+                numMisses++;
+            }
+
+            // If the user wins
+            if (Arrays.equals(placeholders, randomWord.toCharArray())) {
+                System.out.print(gallows[numMisses]);
+                System.out.print("\nWord: ");
+                printPlaceholders(placeholders);
+                System.out.println("\nGOOD WORK!");
+                break;
+            }
+        }
+
+        // If the user loses
+        if (numMisses == 6) {
+            System.out.print(gallows[6]);
+            System.out.print("\nRIP");
+            System.out.print("\nThe word was '" + randomWord + "'!");
+        }
+        scanner.close();
+    }
+
+    /**
+     *
+     * @return
+     *
+     */
+    public static String chooseRandomWord() {
+        double randomDouble = words.length * Math.random();
+        int randomInt = (int) randomDouble;
+        return words[randomInt];
+    }
+
+    /**
+     *
+     * @param word
+     * @param guess
+     * @return
+     *
+     */
+    public static boolean checkGuess (String word, char guess) {
+        for (int i = 0; i < word.length(); i++) {
+            if (word.charAt(i) == guess) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @param word
+     * @param placeholders
+     * @param guess
+     *
+     */
+    public static void updatePlaceholders (String word, char[] placeholders, char guess) {
+        for (int i = 0; i < word.length(); i++) {
+            if (word.charAt(i) == guess) {
+                placeholders[i] = guess;
+            }
+        }
+    }
+    /**
+     *
+     * @param placeholders
+     *
+     */
+    public static void printPlaceholders (char[] placeholders) {
+        for (int i = 0; i < placeholders.length; i++) {
+            System.out.print(" " + placeholders[i]);
+        }
+        System.out.println("\n");
+    }
+
+    /**
+     *
+     * @param misses
+     *
+     */
+    public static void printMisses (char[] misses) {
+        for (int i = 0; i < misses.length; i++) {
+            System.out.print(misses[i]);
+        }
+    }
+}
