@@ -5,7 +5,7 @@ public class Hangman {
     /**
      *  List of words to choose from
      */
-    public static String[] words = {"actor", "adamant", "afraid", "ant", "apple", "ash"
+    public static String[] words = {"actor", "adamant", "afraid", "ant", "apple", "ash",
             "badger", "balloon", "bat", "bear", "beaver", "burst",
             "camel", "cat", "clam", "cobra", "cougar", "coyote", "crow",
             "dance", "dare", "deal", "deer", "dog", "donkey", "duck",
