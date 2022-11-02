@@ -17,7 +17,7 @@ public class Hangman {
             "large", "leverage", "lion", "lizard", "llama", "lounge",
             "marriage", "mentor", "military", "mole", "monkey", "moose", "mouse", "mule",
             "nasty", "nerd", "newt", "niche", "nine", "nose", "nurse",
-            "oil", "orange", "ostrich", "otter", "owl",
+            "ostrich", "otter", "owl",
             "panda", "parrot", "pest", "pigeon", "player", "portrait", "python",
             "rabbit", "ram", "rat", "raven", "rest", "rhino", "rhythm",
             "salmon", "seal", "shark", "sheep", "skunk", "sloth", "snake", "spider", "stork", "swan",
@@ -39,6 +39,31 @@ public class Hangman {
             "shark", "sheep", "skunk", "sloth", "snake", "spider", "stork", "swan",
             "tiger", "toad", "trout", "turkey", "turtle", "weasel", "whale", "wolf",
             "wombat", "zebra"
+    };
+
+    /**
+     *  Topic 3 Words
+     */
+    public static String[] food = {
+            "apple", "apricot", "avocado",
+            "bacon", "beans", "berries", "biriyani", "biscuit", "bread",
+            "cake", "cheese", "chips", "chocolate", "croissant",
+            "dates", "donuts", "dosa", "durian", "dragon fruit",
+            "egg", "eggnog", "eggplant parmesan", "enchilada",
+            "falafel", "figs", "fish", "french fries", "frittata",
+            "gelato", "ghee", "ghost peppers", "gingerbread", "grapes",
+            "hakka noodles", "halwa", "ham", "honey", "hot dog", "hummus",
+            "ice cream", "iced tea", "irish stew", "jalapeno", "jam", "juice",
+            "kale", "kebab", "kimchi", "kiwi", "kofta",
+            "lasagna", "lemonade", "lentils", "lettuce", "lollipop",
+            "macaroni", "mango", "milk", "momos", "mousse", "mutton",
+            "nachos", "noodles", "nuggets",
+            "oatmeal", "oil", "olives", "onion", "orange", "oregano",
+            "pakora", "pancake", "parota", "pasta", "pizza", "popcorn",
+            "quesadilla", "quiche", "quinoa", "raddish", "raisins", "ramen", "rice",
+            "salad", "sandwich", "shrimp", "soda", "soup", "spaghetti", "steak",
+            "tacos", "tamarind", "tea", "tuna", "udon", "unagi", "vada pav", "vanilla",
+            "waffles", "wasabi", "wonton", "xanthia", "yogurt", "zucchini"
     };
 
     /**
@@ -107,7 +132,7 @@ public class Hangman {
         Scanner scanner = new Scanner(System.in);
 
         // Asking user to choose a topic
-        System.out.print("Topics:\n\t1. General\n\t2. Animals");
+        System.out.print("Topics:\n\t1. General\n\t2. Animals\\n\t3. Food");
         System.out.print("\nChoose a topic number: ");
         int topicNumber = scanner.nextInt();
         scanner.nextLine();
@@ -193,7 +218,9 @@ public class Hangman {
             case 2:
                 randomInt = (int) (animals.length * Math.random());
                 return animals[randomInt];
-
+            case 3:
+                randomInt = (int) (food.length * Math.random());
+                return food[randomInt];
             default:
                 randomInt = (int) (general.length * Math.random());
                 return general[randomInt];
